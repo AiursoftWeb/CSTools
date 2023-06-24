@@ -304,6 +304,7 @@ namespace Aiursoft.CSTools.Tests.Tools
             // Arrange
             string input = "Hello World";
             int partLength = 5;
+            // ReSharper disable once StringLiteralTypo
             string[] expected = { "Hello", " Worl", "d" };
 
             // Act
@@ -325,6 +326,84 @@ namespace Aiursoft.CSTools.Tests.Tools
 
             // Assert
             Assert.AreEqual(expected, result);
+        }
+        
+        [TestMethod]
+        public void IsValidJson_WhenValidJsonObject_ReturnsTrue()
+        {
+            // Arrange
+            string jsonString = "{\"name\":\"John\",\"age\":30,\"city\":\"New York\"}";
+
+            // Act
+            bool isValid = jsonString.IsValidJson();
+
+            // Assert
+            Assert.IsTrue(isValid);
+        }
+
+        [TestMethod]
+        public void IsValidJson_WhenValidJsonArray_ReturnsTrue()
+        {
+            // Arrange
+            string jsonString = "[\"apple\",\"banana\",\"cherry\"]";
+
+            // Act
+            bool isValid = jsonString.IsValidJson();
+
+            // Assert
+            Assert.IsTrue(isValid);
+        }
+
+        [TestMethod]
+        public void IsValidJson_WhenValidJsonString_ReturnsTrue()
+        {
+            // Arrange
+            string jsonString = "\"Hello, World!\"";
+
+            // Act
+            bool isValid = jsonString.IsValidJson();
+
+            // Assert
+            Assert.IsTrue(isValid);
+        }
+
+        [TestMethod]
+        public void IsValidJson_WhenEmptyString_ReturnsFalse()
+        {
+            // Arrange
+            string jsonString = "";
+
+            // Act
+            bool isValid = jsonString.IsValidJson();
+
+            // Assert
+            Assert.IsFalse(isValid);
+        }
+
+        [TestMethod]
+        public void IsValidJson_WhenWhitespaceString_ReturnsFalse()
+        {
+            // Arrange
+            string jsonString = "     ";
+
+            // Act
+            bool isValid = jsonString.IsValidJson();
+
+            // Assert
+            Assert.IsFalse(isValid);
+        }
+
+        [TestMethod]
+        public void IsValidJson_WhenInvalidJson_ReturnsFalse()
+        {
+            // Arrange
+            string jsonString = "invalid json";
+
+            // Act
+            bool isValid = jsonString.IsValidJson();
+
+            // Assert
+            Assert.IsFalse(isValid);
         }
     }
 }
