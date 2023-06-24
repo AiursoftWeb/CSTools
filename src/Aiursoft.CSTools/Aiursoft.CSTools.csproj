@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<!--Build and code-->
+		<OutputType>Exe</OutputType>
+		<Version>6.0.0</Version>
+		<TargetFramework>net6.0</TargetFramework>
+		<!--Best practice-->
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<!--Nuget--> 
+		<Company>Aiursoft</Company>
+		<Product>CSTools</Product>
+		<Authors>anduin</Authors>
+		<Description>It contains many useful tools for CSharp developers.</Description>
+		<PackageTags>dotnet csproj extends</PackageTags>
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://gitlab.aiursoft.cn/aiursoft/cstools</RepositoryUrl>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://gitlab.aiursoft.cn/aiursoft/cstools</PackageProjectUrl>
+	</PropertyGroup>
+
+</Project>
