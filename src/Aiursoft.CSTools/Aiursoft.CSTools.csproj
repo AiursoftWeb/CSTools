@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<!--Build and code-->
-		<OutputType>Exe</OutputType>
+		<OutputType>Library</OutputType>
 		<Version>6.0.0</Version>
 		<TargetFramework>net6.0</TargetFramework>
 		<!--Best practice-->
@@ -19,5 +19,9 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://gitlab.aiursoft.cn/aiursoft/cstools</PackageProjectUrl>
 	</PropertyGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="Aiursoft.Scanner.Abstract" Version="6.0.9" />
+	</ItemGroup>
 
 </Project>
