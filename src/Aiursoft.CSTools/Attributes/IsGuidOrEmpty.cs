@@ -2,7 +2,7 @@
 
 namespace Aiursoft.CSTools.Attributes;
 
-public class IsGuidOrEmpty : TestableValidationAttribute
+public class IsGuidOrEmpty : ValidationAttribute
 {
     public override bool IsValid(object? value)
     {

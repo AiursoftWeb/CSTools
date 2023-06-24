@@ -2,7 +2,7 @@
 
 namespace Aiursoft.CSTools.Attributes;
 
-public class ValidFolderName : TestableValidationAttribute
+public class ValidFolderName : ValidationAttribute
 {
     private char[] GetInvalidFileNameChars()
     {

@@ -3,7 +3,6 @@ using System.Text;
 
 namespace Aiursoft.CSTools.Tools;
 
-// TODO: Move to WebTools.
 public static class WebSocketExtends
 {
     public static async Task SendMessage(this WebSocket ws, string message)

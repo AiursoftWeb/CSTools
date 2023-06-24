@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace Aiursoft.CSTools.Attributes;
 
-public class ValidDomainName : TestableValidationAttribute
+public class ValidDomainName : ValidationAttribute
 {
     private readonly string _domainRegex = @"^[-a-z0-9_]+$";
 

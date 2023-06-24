@@ -2,7 +2,7 @@
 
 namespace Aiursoft.CSTools.Attributes;
 
-public class NoSpace : TestableValidationAttribute
+public class NoSpace : ValidationAttribute
 {
     public override bool IsValid(object? value)
     {

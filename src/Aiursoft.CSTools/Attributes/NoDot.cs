@@ -2,7 +2,7 @@
 
 namespace Aiursoft.CSTools.Attributes;
 
-public class NoDot : TestableValidationAttribute
+public class NoDot : ValidationAttribute
 {
     public override bool IsValid(object? value)
     {
