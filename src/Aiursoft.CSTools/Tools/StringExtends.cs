@@ -207,4 +207,14 @@ public static class StringExtends
 
         return false;
     }
+    
+    public static bool IsTrue(this string? input)
+    {
+        return string.Equals(input?.Trim(), true.ToString(), StringComparison.OrdinalIgnoreCase);
+    }
+    
+    public static bool IsFalse(this string? input)
+    {
+        return !input.IsTrue();
+    }
 }
