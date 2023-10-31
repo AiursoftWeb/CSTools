@@ -38,6 +38,6 @@ public static class CsvExtends
             csv.AppendLine(newLine.ToString().Trim(','));
         }
 
-        return csv.ToString().StringToBytes();
+        return csv.ToString().StringToUtf8WithBom();
     }
 }

@@ -24,9 +24,27 @@ public static class StringExtends
         return Encoding.UTF8.GetBytes(input);
     }
 
+    public static byte[] StringToUtf8WithBom(this string input)
+    {
+        var preamble = Encoding.UTF8.GetPreamble();
+        var inputBytes = Encoding.UTF8.GetBytes(input);
+        var result = new byte[preamble.Length + inputBytes.Length];
+        preamble.CopyTo(result, 0);
+        inputBytes.CopyTo(result, preamble.Length);
+        return result;
+    }
+
     public static string BytesToString(this byte[] input)
     {
         return Encoding.UTF8.GetString(input, 0, input.Length);
+    }
+    
+    public static string Utf8WithBomToString(this byte[] input)
+    {
+        var preamble = Encoding.UTF8.GetPreamble();
+        var inputBytes = new byte[input.Length - preamble.Length];
+        Array.Copy(input, preamble.Length, inputBytes, 0, inputBytes.Length);
+        return Encoding.UTF8.GetString(inputBytes, 0, inputBytes.Length);
     }
 
     public static string StringToBase64(this string input)
@@ -37,16 +55,6 @@ public static class StringExtends
     public static string Base64ToString(this string input)
     {
         return BytesToString(Base64ToBytes(input));
-    }
-
-    public static byte[] ToUtf8WithDom(this string content)
-    {
-        var encoded = Encoding.UTF8.GetBytes(content);
-        var bom = new byte[] { 0xEF, 0xBB, 0xBF };
-        var all = new byte[bom.Length + encoded.Length];
-        Array.Copy(bom, all, bom.Length);
-        Array.Copy(encoded, 0, all, bom.Length, encoded.Length);
-        return all;
     }
 
     private static string GetMd5Hash(MD5 md5Hash, string input)

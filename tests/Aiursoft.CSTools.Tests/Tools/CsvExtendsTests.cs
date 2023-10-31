@@ -20,7 +20,10 @@ namespace Aiursoft.CSTools.Tests.Tools
 
             // Act
             var result = items.ToCsv();
-            var resultString = result.BytesToString();
+            
+            // result is UTF-8 with BOM
+            // Decode with UTF-8 with bom
+            var resultString = result.Utf8WithBomToString();
             Assert.AreEqual(@"""Id"",""Name""
 ""1"",""Item 1""
 ""2"",""Item 2""

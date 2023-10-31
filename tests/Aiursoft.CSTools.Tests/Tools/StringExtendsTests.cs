@@ -98,7 +98,7 @@ namespace Aiursoft.CSTools.Tests.Tools
             byte[] expected = { 0xEF, 0xBB, 0xBF, 72, 101, 108, 108, 111 };
 
             // Act
-            byte[] result = content.ToUtf8WithDom();
+            byte[] result = content.StringToUtf8WithBom();
 
             // Assert
             CollectionAssert.AreEqual(expected, result);
