@@ -1,27 +1,29 @@
 <Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <OutputType>Library</OutputType>
-        <Version>7.0.1</Version>
-        <TargetFramework>net7.0</TargetFramework>
-        <AssemblyName>Aiursoft.CSTools</AssemblyName>
-        <RootNamespace>Aiursoft.CSTools</RootNamespace>
-        <IsTestProject>false</IsTestProject>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <IsPackable>true</IsPackable>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-        <Company>Aiursoft</Company>
-        <Product>CSTools</Product>
-        <Authors>anduin</Authors>
-        <Description>It contains many useful tools for CSharp developers.</Description>
-        <PackageId>Aiursoft.CSTools</PackageId>
-        <PackageTags>dotnet csproj extends</PackageTags>
-        <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <PackageProjectUrl>https://gitlab.aiursoft.cn/aiursoft/cstools</PackageProjectUrl>
-        <RepositoryType>git</RepositoryType>
-        <RepositoryUrl>https://gitlab.aiursoft.cn/aiursoft/cstools</RepositoryUrl>
-    </PropertyGroup>
-    <ItemGroup>
-        <PackageReference Include="Aiursoft.Scanner.Abstractions" Version="7.0.0" />
-    </ItemGroup>
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <Version>7.0.2</Version>
+    <TargetFramework>net7.0</TargetFramework>
+    <AssemblyName>Aiursoft.CSTools</AssemblyName>
+    <RootNamespace>Aiursoft.CSTools</RootNamespace>
+    <IsTestProject>false</IsTestProject>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IsPackable>true</IsPackable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Company>Aiursoft</Company>
+    <Product>CSTools</Product>
+    <Authors>anduin</Authors>
+    <Description>It contains many useful tools for CSharp developers.</Description>
+    <PackageId>Aiursoft.CSTools</PackageId>
+    <PackageTags>dotnet csproj extends</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://gitlab.aiursoft.cn/aiursoft/cstools</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://gitlab.aiursoft.cn/aiursoft/cstools</RepositoryUrl>
+    <PackageReadmeFile>Readme.md</PackageReadmeFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Aiursoft.Scanner.Abstractions" Version="7.0.1" />
+    <None Include="../../Readme.md" Pack="true" PackagePath="." />
+  </ItemGroup>
 </Project>
