@@ -24,7 +24,7 @@ public class CommandServiceTests
         {
             var service = new CommandService();
             var (code, output, error) = await service.RunCommandAsync("ping", "bing.com -c 1", Path.GetTempPath());
-            Assert.IsTrue(output.Contains("Pinging bing.com"));
+            Assert.IsTrue(output.Contains("PING bing.com"));
             Assert.IsTrue(string.IsNullOrEmpty(error));
             Assert.AreEqual(0, code);
         }
@@ -32,7 +32,7 @@ public class CommandServiceTests
         {
             var service = new CommandService();
             var (code, output, error) = await service.RunCommandAsync("ping", "bing.com -c 1", Path.GetTempPath());
-            Assert.IsTrue(output.Contains("Pinging bing.com"));
+            Assert.IsTrue(output.Contains("PING bing.com"));
             Assert.IsTrue(string.IsNullOrEmpty(error));
             Assert.AreEqual(0, code);
         }
