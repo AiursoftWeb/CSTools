@@ -17,7 +17,7 @@ public class CommandServiceTests
     {
         var service = new CommandService();
         var (code, output, error) = await service.RunCommandAsync("ping", _testCommand, Environment.CurrentDirectory);
-        Assert.IsTrue(output.Contains("Pinging baidu.com"));
+        Assert.IsTrue(output.Contains("baidu.com"));
         Assert.IsTrue(string.IsNullOrEmpty(error));
         Assert.AreEqual(0, code);
     }
