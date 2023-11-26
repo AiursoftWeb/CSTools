@@ -1,5 +1,7 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.ComponentModel;
+using System.Runtime.InteropServices;
 using Aiursoft.CSTools.Services;
+using Aiursoft.CSTools.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Aiursoft.CSTools.Tests.Services;
@@ -7,38 +9,61 @@ namespace Aiursoft.CSTools.Tests.Services;
 [TestClass]
 public class CommandServiceTests
 {
+    private readonly string _testCommand =
+        RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "-n 2 baidu.com" : "-c 2 baidu.com";
+    
     [TestMethod]
     public async Task TestPing()
     {
-        // If Windows, -n 1
-        // If Linux, -c 1
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        var service = new CommandService();
+        var (code, output, error) = await service.RunCommandAsync("ping", _testCommand, Environment.CurrentDirectory);
+        Assert.IsTrue(output.Contains("Pinging baidu.com"));
+        Assert.IsTrue(string.IsNullOrEmpty(error));
+        Assert.AreEqual(0, code);
+    }
+    
+    [TestMethod]
+    public async Task TestProgramNotExist()
+    {
+        var service = new CommandService();
+        await Assert.ThrowsExceptionAsync<Win32Exception>(async () =>
         {
-            var service = new CommandService();
-            var (code, output, error) = await service.RunCommandAsync("ping", "bing.com -n 1", Path.GetTempPath());
-            Assert.IsTrue(output.Contains("Pinging bing.com"));
-            Assert.IsTrue(string.IsNullOrEmpty(error));
-            Assert.AreEqual(0, code);
-        }
-        else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            await service.RunCommandAsync("notexist", string.Empty, Environment.CurrentDirectory);
+        });
+    }
+    
+    [TestMethod]
+    public async Task TestProgramTimeout()
+    {
+        var service = new CommandService();
+        await Assert.ThrowsExceptionAsync<TimeoutException>(async () =>
         {
-            var service = new CommandService();
-            var (code, output, error) = await service.RunCommandAsync("ping", "bing.com -c 1", Path.GetTempPath());
-            Assert.IsTrue(output.Contains("PING bing.com"));
-            Assert.IsTrue(string.IsNullOrEmpty(error));
-            Assert.AreEqual(0, code);
-        }
-        else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-        {
-            var service = new CommandService();
-            var (code, output, error) = await service.RunCommandAsync("ping", "bing.com -c 1", Path.GetTempPath());
-            Assert.IsTrue(output.Contains("PING bing.com"));
-            Assert.IsTrue(string.IsNullOrEmpty(error));
-            Assert.AreEqual(0, code);
-        }
-        else
-        {
-            Assert.Fail("Unknown OS!");
-        }
+            await service.RunCommandAsync("ping", _testCommand, Environment.CurrentDirectory, TimeSpan.FromMilliseconds(1));
+        });
+    }
+    
+    [TestMethod]
+    public async Task TestProgramError()
+    {
+        var service = new CommandService();
+        var (code, output, _) = await service.RunCommandAsync("ping", "-n 2 notexist", Environment.CurrentDirectory);
+        Assert.IsTrue(output.Contains("notexist"));
+        Assert.AreEqual(1, code);
+    }
+    
+    [TestMethod]
+    public async Task TestLargeOutput()
+    {
+        var service = new CommandService();
+        var testDirectory = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+        _ = await service.RunCommandAsync("git", "clone https://github.com/ediwang/moonglade.git --bare --filter=tree:0 .", testDirectory);
+        var (code, output, error) = await service.RunCommandAsync("git", "--no-pager log --pretty=format:\"%H\" --max-count=2000", testDirectory);
+        Assert.AreEqual(0, code);
+        Assert.IsTrue(string.IsNullOrEmpty(error));
+        // Total Lines:
+        Assert.AreEqual(2000, output.Split('\n').Length);
+        
+        // Clean
+        FolderDeleter.DeleteByForce(testDirectory);
     }
 }
