@@ -18,6 +18,8 @@ public class CommandService : ITransientDependency
             {
                 FileName = bin,
                 Arguments = arg,
+                CreateNoWindow = true,
+                WindowStyle = ProcessWindowStyle.Hidden,
                 WorkingDirectory = path,
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
