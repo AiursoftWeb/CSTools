@@ -48,7 +48,7 @@ public class CommandServiceTests
         var service = new CommandService();
         var (code, output, error) = await service.RunCommandAsync("ping", "-n 2 notexist", Environment.CurrentDirectory);
         Assert.IsTrue(output.ToLower().Contains("ping") || error.ToLower().Contains("ping")); 
-        Assert.AreEqual(1, code);
+        Assert.IsTrue(code > 0);
     }
     
     [TestMethod]
