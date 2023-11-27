@@ -30,10 +30,11 @@ public class CommandService : ITransientDependency
 
         var outputMemoryStream = new MemoryStream();
         var errorMemoryStream = new MemoryStream();
-        var readOutputTask = Task.Run(() => process.StandardOutput.BaseStream.CopyToAsync(outputMemoryStream));
-        var readErrorTask = Task.Run(() => process.StandardError.BaseStream.CopyToAsync(errorMemoryStream));
-
-        var programTask = Task.WhenAll(readOutputTask, readErrorTask, process.WaitForExitAsync());
+        var programTask = Task.WhenAll(
+            process.StandardOutput.BaseStream.CopyToAsync(outputMemoryStream),
+            process.StandardError.BaseStream.CopyToAsync(errorMemoryStream), 
+            process.WaitForExitAsync()
+        );
         await Task.WhenAny(
             Task.Delay(timeout.Value),
             programTask);
