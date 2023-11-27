@@ -43,7 +43,6 @@ public class CommandService : ITransientDependency
             throw new TimeoutException($@"Execute command: {bin} {arg} at {path} was time out! Timeout is {timeout}.");
         }
 
-        await process.WaitForExitAsync();
         var output = Encoding.UTF8.GetString(outputMemoryStream.ToArray());
         var error = Encoding.UTF8.GetString(errorMemoryStream.ToArray());
         return (process.ExitCode, output, error);
