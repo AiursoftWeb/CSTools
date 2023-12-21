@@ -6,8 +6,12 @@ namespace Aiursoft.CSTools.Services;
 
 public class CommandService : ITransientDependency
 {
-    public async Task<(int code, string output, string error)> RunCommandAsync(string bin, string arg, string path,
-        TimeSpan? timeout = null)
+    public async Task<(int code, string output, string error)> RunCommandAsync(
+        string bin, 
+        string arg, 
+        string path,
+        TimeSpan? timeout = null,
+        Action<int>? getId = null)
     {
         if (!Directory.Exists(path)) Directory.CreateDirectory(path);
         timeout ??= TimeSpan.FromMinutes(2);
@@ -27,6 +31,8 @@ public class CommandService : ITransientDependency
             }
         };
         process.Start();
+
+        getId?.Invoke(process.Id);
 
         var outputMemoryStream = new MemoryStream();
         var errorMemoryStream = new MemoryStream();
