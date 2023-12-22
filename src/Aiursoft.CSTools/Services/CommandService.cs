@@ -11,7 +11,8 @@ public class CommandService : ITransientDependency
         string arg, 
         string path,
         TimeSpan? timeout = null,
-        Action<int>? getId = null)
+        Action<int>? getId = null,
+        bool killTimeoutProcess = true)
     {
         if (!Directory.Exists(path)) Directory.CreateDirectory(path);
         timeout ??= TimeSpan.FromMinutes(2);
@@ -46,6 +47,17 @@ public class CommandService : ITransientDependency
             programTask);
         if (!programTask.IsCompleted)
         {
+            try
+            {
+                if (killTimeoutProcess && process.Id != 0)
+                {
+                    process.Kill();
+                }
+            }
+            catch (Exception e)
+            {
+                throw new TimeoutException($@"Execute command: {bin} {arg} at {path} was time out! Timeout is {timeout}. And we also failed to kill the timeout process because '{e.Message}'!");
+            }
             throw new TimeoutException($@"Execute command: {bin} {arg} at {path} was time out! Timeout is {timeout}.");
         }
 
