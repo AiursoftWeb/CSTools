@@ -11,7 +11,6 @@ public class CommandService : ITransientDependency
         string arg, 
         string path,
         TimeSpan? timeout = null,
-        Action<int>? getId = null,
         bool killTimeoutProcess = true)
     {
         if (!Directory.Exists(path)) Directory.CreateDirectory(path);
@@ -32,8 +31,6 @@ public class CommandService : ITransientDependency
             }
         };
         process.Start();
-
-        getId?.Invoke(process.Id);
 
         var outputMemoryStream = new MemoryStream();
         var errorMemoryStream = new MemoryStream();

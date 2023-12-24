@@ -16,12 +16,10 @@ public class CommandServiceTests
     public async Task TestPing()
     {
         var service = new CommandService();
-        var processId = 0;
-        var (code, output, error) = await service.RunCommandAsync("ping", _testCommand, Environment.CurrentDirectory, getId: i => processId = i);
+        var (code, output, error) = await service.RunCommandAsync("ping", _testCommand, Environment.CurrentDirectory);
         Assert.IsTrue(output.Contains("baidu.com"));
         Assert.IsTrue(string.IsNullOrEmpty(error));
         Assert.AreEqual(0, code);
-        Assert.IsTrue(processId > 0);
     }
     
     [TestMethod]
