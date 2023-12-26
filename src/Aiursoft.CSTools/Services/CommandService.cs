@@ -6,7 +6,7 @@ namespace Aiursoft.CSTools.Services;
 
 public class CommandService : ITransientDependency
 {
-    public async Task<(int code, string output, string error)> RunCommandAsync(
+    public virtual async Task<(int code, string output, string error)> RunCommandAsync(
         string bin, 
         string arg, 
         string path,
