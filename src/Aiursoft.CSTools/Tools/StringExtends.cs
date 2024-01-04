@@ -180,15 +180,16 @@ public static class StringExtends
 
     public static string HumanReadableSize(this long size)
     {
+        double sizeD = size;
         string[] sizes = { "B", "KB", "MB", "GB", "TB" };
         var order = 0;
-        while (size >= 1024 && order < sizes.Length - 1)
+        while (sizeD >= 1024 && order < sizes.Length - 1)
         {
             order++;
-            size /= 1024;
+            sizeD /= 1024;
         }
 
-        return $"{size:0.##} {sizes[order]}";
+        return $"{sizeD:0.##} {sizes[order]}";
     }
 
     public static bool IsValidJson(this string strInput)

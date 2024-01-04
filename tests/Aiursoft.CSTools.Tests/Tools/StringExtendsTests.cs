@@ -318,8 +318,8 @@ namespace Aiursoft.CSTools.Tests.Tools
         public void HumanReadableSize_ShouldReturnHumanReadableSizeString()
         {
             // Arrange
-            long size = 1024 * 1024 * 2;
-            string expected = "2 MB";
+            long size = 1024 * 1024 * 2 + 1024 * 100 + 1024 * 30 + 1024 * 4;
+            string expected = "2.13 MB";
 
             // Act
             string result = size.HumanReadableSize();
