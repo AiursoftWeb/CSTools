@@ -13,9 +13,9 @@ namespace Aiursoft.CSTools.Tests.Tools
             // Arrange
             var items = new List<TestItem>
             {
-                new TestItem { Id = 1, Name = "Item 1", Price = 10.99 },
-                new TestItem { Id = 2, Name = "Item 2", Price = 19.99 },
-                new TestItem { Id = 3, Name = "Item 3", Price = 5.99 }
+                new() { Id = 1, Name = "Item 1", Price = 10.99 },
+                new() { Id = 2, Name = "Item 2", Price = 19.99 },
+                new() { Id = 3, Name = "Item 3", Price = 5.99 }
             };
 
             // Act
