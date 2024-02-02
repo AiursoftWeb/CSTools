@@ -23,7 +23,7 @@
     <PackageReadmeFile>Readme.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Aiursoft.Scanner.Abstractions" Version="7.0.1" />
+    <PackageReference Include="Aiursoft.Scanner.Abstractions" Version="7.0.2" />
     <None Include="../../Readme.md" Pack="true" PackagePath="." />
   </ItemGroup>
 </Project>
