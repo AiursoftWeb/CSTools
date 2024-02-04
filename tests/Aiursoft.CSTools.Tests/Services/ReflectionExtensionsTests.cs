@@ -20,6 +20,18 @@ public class ReflectionExtensionsTests
         // Assert
         Assert.AreEqual(val, obj.PrivateProperty);
     }
+    
+    [TestMethod]
+    public void SetPrivateNonExistentPropertyValue_WhenCalled_ShouldThrowException()
+    {
+        // Arrange
+        var obj = new TestClass();
+        const string propName = "NonExistentProperty";
+        const int val = 10;
+
+        // Act and Assert
+        Assert.ThrowsException<ArgumentOutOfRangeException>(() => obj.SetPrivatePropertyValue(propName, val));
+    }
 
     private class TestClass
     {
