@@ -16,6 +16,11 @@ public static class EntryExtends
         var name = Assembly.GetEntryAssembly()?.GetName().Name?.ToLower().Trim() ?? string.Empty;
         return name.StartsWith("test") || name.EndsWith("testrunner");
     }
+    
+    public static bool IsInDocker()
+    {
+        return File.Exists("/.dockerenv") || Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER")?.ToLower().Trim() == "true";
+    }
 
     public static bool IsProgramEntry()
     {
