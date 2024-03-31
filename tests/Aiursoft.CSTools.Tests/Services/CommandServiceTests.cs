@@ -15,6 +15,12 @@ public class CommandServiceTests
     [TestMethod]
     public async Task TestPing()
     {
+        if (EntryExtends.IsInDocker())
+        {
+            Assert.Inconclusive("This test is not supported in docker.");
+            return;
+        }
+        
         var service = new CommandService();
         var (code, output, error) = await service.RunCommandAsync("ping", _testCommand, Environment.CurrentDirectory);
         Assert.IsTrue(output.Contains("baidu.com"));
@@ -35,6 +41,11 @@ public class CommandServiceTests
     [TestMethod]
     public async Task TestProgramTimeout()
     {
+        if (EntryExtends.IsInDocker())
+        {
+            Assert.Inconclusive("This test is not supported in docker.");
+            return;
+        }
         var service = new CommandService();
         await Assert.ThrowsExceptionAsync<TimeoutException>(async () =>
         {
@@ -45,6 +56,11 @@ public class CommandServiceTests
     [TestMethod]
     public async Task TestProgramError()
     {
+        if (EntryExtends.IsInDocker())
+        {
+            Assert.Inconclusive("This test is not supported in docker.");
+            return;
+        }
         var service = new CommandService();
         var (code, output, error) = await service.RunCommandAsync("ping", "-n 2 notexist", Environment.CurrentDirectory);
         Assert.IsTrue(output.ToLower().Contains("ping") || error.ToLower().Contains("ping")); 
@@ -54,6 +70,11 @@ public class CommandServiceTests
     [TestMethod]
     public async Task TestLargeOutput()
     {
+        if (EntryExtends.IsInDocker())
+        {
+            Assert.Inconclusive("This test is not supported in docker.");
+            return;
+        }
         var service = new CommandService();
         var testDirectory = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
         _ = await service.RunCommandAsync("git", "clone https://github.com/ediwang/moonglade.git --bare --filter=tree:0 .", testDirectory);
