@@ -10,13 +10,13 @@ namespace Aiursoft.CSTools.Tests.Tools
         public void Shuffle_ShouldShuffleList()
         {
             // Arrange
-            var list = new List<int> { 1, 2, 3, 4, 5 };
+            var list = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8 };
 
             // Act
             list.Shuffle();
 
             // Assert
-            CollectionAssert.AreNotEqual(new List<int> { 1, 2, 3, 4, 5 }, list);
+            CollectionAssert.AreNotEqual(new List<int> { 1, 2, 3, 4, 5, 6, 7, 8 }, list);
         }
         
         [TestMethod]
