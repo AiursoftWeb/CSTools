@@ -16,7 +16,7 @@ public static class StringExtends
 
     public static byte[] Base64ToBytes(this string input)
     {
-        return string.IsNullOrWhiteSpace(input) ? Array.Empty<byte>() : Convert.FromBase64String(input);
+        return string.IsNullOrWhiteSpace(input) ? [] : Convert.FromBase64String(input);
     }
 
     public static byte[] StringToBytes(this string input)
@@ -181,7 +181,7 @@ public static class StringExtends
     public static string HumanReadableSize(this long size)
     {
         double sizeD = size;
-        string[] sizes = { "B", "KB", "MB", "GB", "TB" };
+        string[] sizes = ["B", "KB", "MB", "GB", "TB"];
         var order = 0;
         while (sizeD >= 1024 && order < sizes.Length - 1)
         {

@@ -10,7 +10,8 @@ namespace Aiursoft.CSTools.Tests.Tools
         public void BytesToBase64_ShouldConvertBytesToBase64String()
         {
             // Arrange
-            byte[] input = { 72, 101, 108, 108, 111 };
+            // ReSharper disable once UseUtf8StringLiteral
+            byte[] input = [72, 101, 108, 108, 111];
             string expected = "SGVsbG8=";
 
             // Act
@@ -25,6 +26,7 @@ namespace Aiursoft.CSTools.Tests.Tools
         {
             // Arrange
             string input = "SGVsbG8=";
+            // ReSharper disable once UseCollectionExpression
             byte[] expected = { 72, 101, 108, 108, 111 };
 
             // Act
@@ -39,7 +41,8 @@ namespace Aiursoft.CSTools.Tests.Tools
         {
             // Arrange
             string input = "Hello";
-            byte[] expected = { 72, 101, 108, 108, 111 };
+            // ReSharper disable once UseUtf8StringLiteral
+            byte[] expected = [72, 101, 108, 108, 111];
 
             // Act
             byte[] result = input.StringToBytes();
@@ -52,7 +55,7 @@ namespace Aiursoft.CSTools.Tests.Tools
         public void BytesToString_ShouldConvertBytesToString()
         {
             // Arrange
-            byte[] input = { 72, 101, 108, 108, 111 };
+            byte[] input = [72, 101, 108, 108, 111];
             string expected = "Hello";
 
             // Act
@@ -95,7 +98,7 @@ namespace Aiursoft.CSTools.Tests.Tools
         {
             // Arrange
             string content = "Hello";
-            byte[] expected = { 0xEF, 0xBB, 0xBF, 72, 101, 108, 108, 111 };
+            byte[] expected = [0xEF, 0xBB, 0xBF, 72, 101, 108, 108, 111];
 
             // Act
             byte[] result = content.StringToUtf8WithBom();
@@ -122,7 +125,7 @@ namespace Aiursoft.CSTools.Tests.Tools
         public void GetMd5_ShouldReturnMd5HashOfBytes()
         {
             // Arrange
-            byte[] data = { 72, 101, 108, 108, 111 };
+            byte[] data = [72, 101, 108, 108, 111];
             string expected = "8B1A9953C4611296A827ABF8C47804D7";
 
             // Act
@@ -152,7 +155,7 @@ namespace Aiursoft.CSTools.Tests.Tools
         {
             // Arrange
             string filename = "image.jpg";
-            string[] extensions = { "jpg", "png", "bmp", "jpeg" };
+            string[] extensions = ["jpg", "png", "bmp", "jpeg"];
 
             // Act
             bool result = filename.IsInFollowingExtension(extensions);
@@ -166,7 +169,7 @@ namespace Aiursoft.CSTools.Tests.Tools
         {
             // Arrange
             string filename = "document.pdf";
-            string[] extensions = { "jpg", "png", "bmp", "jpeg" };
+            string[] extensions = ["jpg", "png", "bmp", "jpeg"];
 
             // Act
             bool result = filename.IsInFollowingExtension(extensions);
@@ -305,7 +308,7 @@ namespace Aiursoft.CSTools.Tests.Tools
             string input = "Hello World";
             int partLength = 5;
             // ReSharper disable once StringLiteralTypo
-            string[] expected = { "Hello", " Worl", "d" };
+            string[] expected = ["Hello", " Worl", "d"];
 
             // Act
             var result = input.SplitInParts(partLength).ToList();
