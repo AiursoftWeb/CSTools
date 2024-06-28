@@ -13,4 +13,24 @@ public static class DictionaryExtends
         dict.Add(key, newValue);
         return newValue;
     }
+
+    /// <summary>
+    /// Copies all files and directories recursively from the source path to the target path.
+    /// </summary>
+    /// <param name="sourcePath">The path to the source directory.</param>
+    /// <param name="targetPath">The path to the target directory.</param>
+    public static void CopyFilesRecursively(this string sourcePath, string targetPath)
+    {
+        // Now Create all the directories
+        foreach (var dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
+        {
+            Directory.CreateDirectory(dirPath.Replace(sourcePath, targetPath));
+        }
+
+        // Copy all the files & Replaces any files with the same name
+        foreach (var newPath in Directory.GetFiles(sourcePath, "*.*",SearchOption.AllDirectories))
+        {
+            File.Copy(newPath, newPath.Replace(sourcePath, targetPath), true);
+        }
+    }
 }
