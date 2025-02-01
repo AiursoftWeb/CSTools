@@ -226,4 +226,36 @@ public static class StringExtends
     {
         return !input.IsTrue();
     }
+
+    /// <summary>
+    /// Replaces occurrences of a specified substring in the input string with another string,
+    /// while maintaining the case of the replaced substring's first letter.
+    ///
+    /// Sample, if the input string is "EndPoint endPoint",
+    ///     the source substring is "endpOInt",
+    ///     the target string is "SomeThing",
+    /// Output will be "SomeThing someThing".
+    /// </summary>
+    /// <param name="content">The input string where the replacement will be performed.</param>
+    /// <param name="source">The substring to be replaced.</param>
+    /// <param name="target">The string to replace the source substring with.</param>
+    /// <returns>
+    /// A new string with the replacements made, respecting the case of the first character
+    /// of each occurrence of the source substring.
+    /// </returns>
+    public static string ReplaceWithUpperLowerRespect(this string content, string source, string target)
+    {
+        if (string.IsNullOrEmpty(content) || string.IsNullOrEmpty(source))
+            return content;
+
+        return Regex.Replace(content, Regex.Escape(source), match =>
+        {
+            if (!string.IsNullOrEmpty(match.Value) && char.IsUpper(match.Value[0]))
+            {
+                return target;
+            }
+
+            return char.ToLower(target[0]) + (target.Length > 1 ? target.Substring(1) : string.Empty);
+        }, RegexOptions.IgnoreCase);
+    }
 }

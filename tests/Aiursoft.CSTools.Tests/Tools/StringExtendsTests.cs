@@ -330,7 +330,7 @@ namespace Aiursoft.CSTools.Tests.Tools
             // Assert
             Assert.AreEqual(expected, result);
         }
-        
+
         [TestMethod]
         public void IsValidJson_WhenValidJsonObject_ReturnsTrue()
         {
@@ -407,6 +407,53 @@ namespace Aiursoft.CSTools.Tests.Tools
 
             // Assert
             Assert.IsFalse(isValid);
+        }
+
+        [TestMethod]
+        public void ReplaceWithUpperLowerRespect_MixedCase_ShouldReplaceRespectively()
+        {
+            // Arrange
+            string content = "EndPoint endPoint";
+            string source = "endpOInt";
+            string target = "SomeThing";
+            string expected = "SomeThing someThing";
+
+            // Act
+            string result = content.ReplaceWithUpperLowerRespect(source, target);
+
+            // Assert
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void ReplaceWithUpperLowerRespect_NoOccurrences_ShouldReturnOriginal()
+        {
+            // Arrange
+            string content = "Hello World";
+            string source = "endpoint";
+            string target = "SomeThing";
+            string expected = "Hello World";
+
+            // Act
+            string result = content.ReplaceWithUpperLowerRespect(source, target);
+
+            // Assert
+            Assert.AreEqual(expected, result);
+        }
+
+        [DataTestMethod]
+        [DataRow(null, "endpoint", "SomeThing", null)]
+        [DataRow("", "endpoint", "SomeThing", "")]
+        [DataRow("Some content", null, "SomeThing", "Some content")]
+        [DataRow("Some content", "", "SomeThing", "Some content")]
+        public void ReplaceWithUpperLowerRespect_NullOrEmptyInputs_ShouldReturnOriginal(string content, string source,
+            string target, string expected)
+        {
+            // Act
+            string result = content.ReplaceWithUpperLowerRespect(source, target);
+
+            // Assert
+            Assert.AreEqual(expected, result);
         }
     }
 }
