@@ -85,6 +85,11 @@ public static class StringExtends
 
     public static string SafeSubstring(this string source, int maxLength)
     {
+        if (maxLength < 3)
+        {
+            throw new ArgumentException("maxLength must be at least 3.", nameof(maxLength));
+        }
+
         return source.Length <= maxLength ? source : $"{source[..(maxLength - 3)]}...";
     }
 
