@@ -87,7 +87,7 @@ public static class StringExtends
     {
         if (maxLength < 3)
         {
-            throw new ArgumentException("maxLength must be at least 3.", nameof(maxLength));
+            return source.Length <= maxLength ? source : source[..maxLength];
         }
 
         return source.Length <= maxLength ? source : $"{source[..(maxLength - 3)]}...";
