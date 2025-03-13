@@ -8,7 +8,7 @@
 
 CSTools are Aiursoft's common CSharp extends for all apps. It contains many useful tools for CSharp developers.
 
-## Installation
+## How to install
 
 To install `Aiursoft.CSTools` to your project from [nuget.org](https://www.nuget.org/packages/Aiursoft.CSTools/):
 
