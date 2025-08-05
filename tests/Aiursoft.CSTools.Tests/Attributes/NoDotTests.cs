@@ -58,7 +58,7 @@ namespace Aiursoft.CSTools.Tests.Attributes
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.IsTrue(result.ErrorMessage!.Contains(validationContext.DisplayName));
+            Assert.IsTrue(result.ErrorMessage?.Contains(validationContext.DisplayName));
         }
     }
 }
