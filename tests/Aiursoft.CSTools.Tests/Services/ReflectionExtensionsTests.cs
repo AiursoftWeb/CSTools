@@ -1,5 +1,4 @@
 ﻿using Aiursoft.CSTools.Services;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Aiursoft.CSTools.Tests.Services;
 
@@ -20,7 +19,7 @@ public class ReflectionExtensionsTests
         // Assert
         Assert.AreEqual(val, obj.PrivateProperty);
     }
-    
+
     [TestMethod]
     public void SetPrivateNonExistentPropertyValue_WhenCalled_ShouldThrowException()
     {
@@ -30,7 +29,7 @@ public class ReflectionExtensionsTests
         const int val = 10;
 
         // Act and Assert
-        Assert.ThrowsException<ArgumentOutOfRangeException>(() => obj.SetPrivatePropertyValue(propName, val));
+        Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => obj.SetPrivatePropertyValue(propName, val));
     }
 
     private class TestClass

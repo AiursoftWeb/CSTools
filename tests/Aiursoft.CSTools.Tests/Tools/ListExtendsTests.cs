@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Aiursoft.CSTools.Tools;
+﻿using Aiursoft.CSTools.Tools;
 
 namespace Aiursoft.CSTools.Tests.Tools
 {

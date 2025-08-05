@@ -1,5 +1,4 @@
 ﻿using Aiursoft.CSTools.Tools;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Aiursoft.CSTools.Tests.Tools
 {
@@ -441,7 +440,7 @@ namespace Aiursoft.CSTools.Tests.Tools
             Assert.AreEqual(expected, result);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(null, "endpoint", "SomeThing", null)]
         [DataRow("", "endpoint", "SomeThing", "")]
         [DataRow("Some content", null, "SomeThing", "Some content")]

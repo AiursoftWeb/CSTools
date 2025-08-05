@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Aiursoft.CSTools.Models;
+﻿using Aiursoft.CSTools.Models;
 
 namespace Aiursoft.CSTools.Tests.Models
 {

@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Aiursoft.CSTools.Attributes;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Aiursoft.CSTools.Tests.Attributes
 {
