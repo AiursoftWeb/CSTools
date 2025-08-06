@@ -58,6 +58,7 @@ namespace Aiursoft.CSTools.Tests.Attributes
 
             // Assert
             Assert.IsNotNull(result);
+            #pragma warning disable CS8602
             Assert.IsTrue(result.ErrorMessage?.Contains(validationContext.DisplayName) ?? false);
         }
     }
