@@ -3,6 +3,8 @@ using System.Runtime.InteropServices;
 using Aiursoft.CSTools.Services;
 using Aiursoft.CSTools.Tools;
 
+[assembly: DoNotParallelize]
+
 namespace Aiursoft.CSTools.Tests.Services;
 
 [TestClass]
@@ -16,7 +18,7 @@ public class CommandServiceTests
     {
         var service = new CommandService();
         var (_, output, error) = await service.RunCommandAsync("ping", _testCommand, Environment.CurrentDirectory);
-        Assert.IsTrue(output.Contains("baidu.com"));
+        Assert.Contains("baidu.com", output);
         Assert.IsTrue(string.IsNullOrEmpty(error));
     }
 
@@ -46,7 +48,7 @@ public class CommandServiceTests
         var service = new CommandService();
         var (code, output, error) = await service.RunCommandAsync("ping", "-n 2 notexist", Environment.CurrentDirectory);
         Assert.IsTrue(output.ToLower().Contains("ping") || error.ToLower().Contains("ping"));
-        Assert.IsTrue(code > 0);
+        Assert.IsGreaterThan(0, code);
     }
 
     [TestMethod]
@@ -59,7 +61,7 @@ public class CommandServiceTests
         Assert.AreEqual(0, code);
         Assert.IsTrue(string.IsNullOrEmpty(error));
         // Total Lines:
-        Assert.AreEqual(2000, output.Split('\n').Length);
+        Assert.HasCount(2000, output.Split('\n'));
 
         // Clean
         FolderDeleter.DeleteByForce(testDirectory);

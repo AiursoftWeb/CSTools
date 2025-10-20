@@ -22,11 +22,12 @@ public class CollectionExtendsTests
                 return Task.CompletedTask;
             });
     }
-    
+
     [TestMethod]
     public async Task TryFindNotFoundTestAsync()
     {
         var collection = new List<int> { 1, 2, 3, 4, 5 };
+        var notFoundExecuted = false;
         await collection.TryFindFirst(
             t => t == 6,
             _ =>
@@ -37,10 +38,11 @@ public class CollectionExtendsTests
             async () =>
             {
                 await Task.Delay(100);
-                Assert.IsTrue(true);
+                notFoundExecuted = true;
             });
+        Assert.IsTrue(notFoundExecuted);
     }
-    
+
     [TestMethod]
     public void TryFindFirstTestSync()
     {
@@ -56,11 +58,12 @@ public class CollectionExtendsTests
                 Assert.Fail();
             });
     }
-    
+
     [TestMethod]
     public void TryFindNotFoundTestSync()
     {
         var collection = new List<int> { 1, 2, 3, 4, 5 };
+        var notFoundExecuted = false;
         collection.TryFindFirst(
             t => t == 6,
             _ =>
@@ -69,7 +72,8 @@ public class CollectionExtendsTests
             },
             () =>
             {
-                Assert.IsTrue(true);
+                notFoundExecuted = true;
             });
+        Assert.IsTrue(notFoundExecuted);
     }
 }
