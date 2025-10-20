@@ -3,6 +3,8 @@ using System.Runtime.InteropServices;
 using Aiursoft.CSTools.Services;
 using Aiursoft.CSTools.Tools;
 
+[assembly: DoNotParallelize]
+
 namespace Aiursoft.CSTools.Tests.Services;
 
 [TestClass]
