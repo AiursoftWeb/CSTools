@@ -47,38 +47,40 @@ public static class OperatingSystemExtensions
         // The primary source for detailed Windows version information is the registry.
 #pragma warning disable CA1416
         using var key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion");
-        if (key != null)
+        if (key == null)
         {
-            // Retrieve ProductName, e.g., "Windows 11 Pro".
-            var productName = key.GetValue("ProductName", "Microsoft Windows NT") as string ?? "Microsoft Windows NT";
+            return Environment.OSVersion.VersionString;
+        }
+        // Retrieve ProductName, e.g., "Windows 11 Pro".
+        var productName = key.GetValue("ProductName", "Microsoft Windows NT") as string ?? "Microsoft Windows NT";
 
-            // Retrieve display version, e.g., "22H2". Available on newer Windows 10/11.
-            var displayVersion = key.GetValue("DisplayVersion", "") as string ?? "";
+        // Retrieve display version, e.g., "22H2". Available on newer Windows 10/11.
+        var displayVersion = key.GetValue("DisplayVersion", "") as string ?? "";
 
-            // Retrieve the full build number including the UBR (Update Build Revision).
-            var currentBuild = key.GetValue("CurrentBuild", "") as string ?? "";
-            var ubr = key.GetValue("UBR", "").ToString() ?? "";
+        // Retrieve the full build number including the UBR (Update Build Revision).
+        var currentBuild = key.GetValue("CurrentBuild", "") as string ?? "";
+        var ubr = key.GetValue("UBR", "").ToString() ?? "";
 
-            var versionString = new StringBuilder(productName);
-            if (!string.IsNullOrWhiteSpace(displayVersion))
-            {
-                versionString.Append($" {displayVersion}");
-            }
-            if (!string.IsNullOrWhiteSpace(currentBuild))
-            {
-                versionString.Append($" (Build {currentBuild}");
-                if (!string.IsNullOrWhiteSpace(ubr))
-                {
-                    versionString.Append($".{ubr}");
-                }
-                versionString.Append(')');
-            }
-
-            return versionString.ToString();
+        var versionString = new StringBuilder(productName);
+        if (!string.IsNullOrWhiteSpace(displayVersion))
+        {
+            versionString.Append($" {displayVersion}");
         }
 
+        if (string.IsNullOrWhiteSpace(currentBuild))
+        {
+            return versionString.ToString();
+        }
+        versionString.Append($" (Build {currentBuild}");
+        if (!string.IsNullOrWhiteSpace(ubr))
+        {
+            versionString.Append($".{ubr}");
+        }
+        versionString.Append(')');
+
+        return versionString.ToString();
+
         // Fallback for Windows if registry reading fails.
-        return Environment.OSVersion.VersionString;
 #pragma warning restore CA1416
     }
 
