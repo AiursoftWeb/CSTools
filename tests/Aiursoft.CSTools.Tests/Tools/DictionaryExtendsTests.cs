@@ -54,7 +54,7 @@ public class DictionaryExtendsTests
         
         // Assert
         Assert.IsTrue(Directory.Exists(targetPath));
-        Assert.IsTrue(Directory.GetFiles(targetPath, "*", SearchOption.AllDirectories).Length > 0);
+        Assert.IsNotEmpty(Directory.GetFiles(targetPath, "*", SearchOption.AllDirectories));
         Assert.IsTrue(File.Exists(Path.Combine(targetPath, "test1.txt")));
         Assert.AreEqual("test", await File.ReadAllTextAsync(Path.Combine(targetPath, "test1.txt")));
         Assert.IsTrue(File.Exists(Path.Combine(targetPath, "testDirectory", "test2.txt")));

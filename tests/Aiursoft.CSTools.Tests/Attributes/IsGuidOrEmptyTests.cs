@@ -72,6 +72,6 @@ public class IsGuidOrEmptyTests
         // Assert
         Assert.IsNotNull(result);
         #pragma warning disable CS8602
-        Assert.IsTrue(result.ErrorMessage!.Contains(validationContext.DisplayName));
+        Assert.Contains(validationContext.DisplayName, result.ErrorMessage);
     }
 }

@@ -29,7 +29,7 @@ namespace Aiursoft.CSTools.Tests.Tools
             list.Shuffle();
 
             // Assert
-            Assert.AreEqual(originalCount, list.Count);
+            Assert.HasCount(originalCount, list);
         }
         
         [TestMethod]
