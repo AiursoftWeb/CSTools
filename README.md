@@ -1,10 +1,10 @@
 # CSTools
 
-[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://gitlab.aiursoft.cn/aiursoft/CSTools/-/blob/master/LICENSE)
-[![Pipeline stat](https://gitlab.aiursoft.cn/aiursoft/CSTools/badges/master/pipeline.svg)](https://gitlab.aiursoft.cn/aiursoft/CSTools/-/pipelines)
-[![Test Coverage](https://gitlab.aiursoft.cn/aiursoft/CSTools/badges/master/coverage.svg)](https://gitlab.aiursoft.cn/aiursoft/CSTools/-/pipelines)
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://gitlab.aiursoft.com/aiursoft/CSTools/-/blob/master/LICENSE)
+[![Pipeline stat](https://gitlab.aiursoft.com/aiursoft/CSTools/badges/master/pipeline.svg)](https://gitlab.aiursoft.com/aiursoft/CSTools/-/pipelines)
+[![Test Coverage](https://gitlab.aiursoft.com/aiursoft/CSTools/badges/master/coverage.svg)](https://gitlab.aiursoft.com/aiursoft/CSTools/-/pipelines)
 [![NuGet version (Aiursoft.CSTools)](https://img.shields.io/nuget/v/Aiursoft.CSTools.svg)](https://www.nuget.org/packages/Aiursoft.CSTools/)
-[![ManHours](https://manhours.aiursoft.cn/r/gitlab.aiursoft.cn/aiursoft/cstools.svg)](https://gitlab.aiursoft.cn/aiursoft/cstools/-/commits/master?ref_type=heads)
+[![ManHours](https://manhours.aiursoft.cn/r/gitlab.aiursoft.com/aiursoft/cstools.svg)](https://gitlab.aiursoft.com/aiursoft/cstools/-/commits/master?ref_type=heads)
 
 CSTools are Aiursoft's common CSharp extends for all apps. It contains many useful tools for CSharp developers.
 

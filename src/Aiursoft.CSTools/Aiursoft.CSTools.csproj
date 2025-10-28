@@ -17,9 +17,9 @@
     <PackageId>Aiursoft.CSTools</PackageId>
     <PackageTags>dotnet csproj extends</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://gitlab.aiursoft.cn/aiursoft/cstools</PackageProjectUrl>
+    <PackageProjectUrl>https://gitlab.aiursoft.com/aiursoft/cstools</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://gitlab.aiursoft.cn/aiursoft/cstools</RepositoryUrl>
+    <RepositoryUrl>https://gitlab.aiursoft.com/aiursoft/cstools</RepositoryUrl>
     <PackageReadmeFile>Readme.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
