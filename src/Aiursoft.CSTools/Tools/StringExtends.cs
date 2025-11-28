@@ -38,7 +38,7 @@ public static class StringExtends
     {
         return Encoding.UTF8.GetString(input, 0, input.Length);
     }
-    
+
     public static string Utf8WithBomToString(this byte[] input)
     {
         var preamble = Encoding.UTF8.GetPreamble();
@@ -85,6 +85,7 @@ public static class StringExtends
 
     public static string SafeSubstring(this string source, int maxLength)
     {
+        if (string.IsNullOrWhiteSpace(source)) return string.Empty;
         if (maxLength < 3)
         {
             return source.Length <= maxLength ? source : source[..maxLength];
@@ -135,8 +136,8 @@ public static class StringExtends
 
     public static string EncodePath(this string input)
     {
-        return string.IsNullOrWhiteSpace(input) ? 
-            string.Empty : 
+        return string.IsNullOrWhiteSpace(input) ?
+            string.Empty :
             input.ToUrlEncoded().Replace("%2F", "/");
     }
 
@@ -221,12 +222,12 @@ public static class StringExtends
 
         return false;
     }
-    
+
     public static bool IsTrue(this string? input)
     {
         return string.Equals(input?.Trim(), true.ToString(), StringComparison.OrdinalIgnoreCase);
     }
-    
+
     public static bool IsFalse(this string? input)
     {
         return !input.IsTrue();
