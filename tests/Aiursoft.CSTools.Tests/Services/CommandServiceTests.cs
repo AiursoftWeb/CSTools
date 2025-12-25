@@ -52,6 +52,23 @@ public class CommandServiceTests
     }
 
     [TestMethod]
+    public async Task TestEnvironmentVariables()
+    {
+        var service = new CommandService();
+        var envs = new Dictionary<string, string?>
+        {
+            { "TEST_ENV", "HELLO_WORLD" }
+        };
+        var (bin, arg) = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+            ? ("cmd", "/c echo %TEST_ENV%")
+            : ("sh", "-c \"echo $TEST_ENV\"");
+
+        var (code, output, _) = await service.RunCommandAsync(bin, arg, Environment.CurrentDirectory, environmentVariables: envs);
+        Assert.AreEqual(0, code);
+        Assert.Contains("HELLO_WORLD", output);
+    }
+
+    [TestMethod]
     public async Task TestLargeOutput()
     {
         var service = new CommandService();

@@ -11,7 +11,8 @@ public class CommandService : ITransientDependency
         string arg, 
         string path,
         TimeSpan? timeout = null,
-        bool killTimeoutProcess = true)
+        bool killTimeoutProcess = true,
+        IDictionary<string, string?>? environmentVariables = null)
     {
         if (!Directory.Exists(path)) Directory.CreateDirectory(path);
         timeout ??= TimeSpan.FromMinutes(2);
@@ -30,6 +31,15 @@ public class CommandService : ITransientDependency
                 RedirectStandardError = true,
             }
         };
+
+        if (environmentVariables != null)
+        {
+            foreach (var (key, value) in environmentVariables)
+            {
+                process.StartInfo.Environment[key] = value;
+            }
+        }
+
         process.Start();
 
         var outputMemoryStream = new MemoryStream();
