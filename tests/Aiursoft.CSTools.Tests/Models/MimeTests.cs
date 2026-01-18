@@ -67,7 +67,7 @@ namespace Aiursoft.CSTools.Tests.Models
             var result = Mime.GetContentType(extension);
 
             // Assert
-            Assert.AreEqual("image/jpeg", result);
+            Assert.AreEqual("application/image-jpg", result);
         }
 
         [TestMethod]
