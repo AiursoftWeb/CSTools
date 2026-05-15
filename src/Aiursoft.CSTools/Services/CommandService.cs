@@ -15,7 +15,7 @@ public class CommandService : ITransientDependency
         IDictionary<string, string?>? environmentVariables = null)
     {
         if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-        timeout ??= TimeSpan.FromMinutes(2);
+        timeout ??= TimeSpan.FromMinutes(25);
 
         var process = new Process
         {
