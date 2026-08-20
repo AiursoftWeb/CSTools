@@ -17,19 +17,17 @@ public class CommandService : ITransientDependency
         if (!Directory.Exists(path)) Directory.CreateDirectory(path);
         timeout ??= TimeSpan.FromMinutes(25);
 
-        var process = new Process
+        using var process = new Process();
+        process.StartInfo = new ProcessStartInfo
         {
-            StartInfo = new ProcessStartInfo
-            {
-                FileName = bin,
-                Arguments = arg,
-                CreateNoWindow = true,
-                WindowStyle = ProcessWindowStyle.Hidden,
-                WorkingDirectory = path,
-                UseShellExecute = false,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-            }
+            FileName = bin,
+            Arguments = arg,
+            CreateNoWindow = true,
+            WindowStyle = ProcessWindowStyle.Hidden,
+            WorkingDirectory = path,
+            UseShellExecute = false,
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
         };
 
         if (environmentVariables != null)
@@ -44,28 +42,38 @@ public class CommandService : ITransientDependency
 
         var outputMemoryStream = new MemoryStream();
         var errorMemoryStream = new MemoryStream();
-        var programTask = Task.WhenAll(
-            process.StandardOutput.BaseStream.CopyToAsync(outputMemoryStream),
-            process.StandardError.BaseStream.CopyToAsync(errorMemoryStream), 
-            process.WaitForExitAsync()
-        );
-        await Task.WhenAny(
-            Task.Delay(timeout.Value),
-            programTask);
-        if (!programTask.IsCompleted)
+        var outputTask = process.StandardOutput.BaseStream.CopyToAsync(outputMemoryStream);
+        var errorTask = process.StandardError.BaseStream.CopyToAsync(errorMemoryStream);
+        var exitTask = process.WaitForExitAsync();
+        var programTask = Task.WhenAll(outputTask, errorTask, exitTask);
+
+        try
         {
+            await programTask.WaitAsync(timeout.Value);
+        }
+        catch (TimeoutException)
+        {
+            Exception? terminationException = null;
             try
             {
                 if (killTimeoutProcess && process.Id != 0)
                 {
-                    process.Kill();
+                    process.Kill(entireProcessTree: true);
+                    await programTask;
                 }
             }
             catch (Exception e)
             {
-                throw new TimeoutException($@"Execute command: {bin} {arg} at {path} was time out! Timeout is {timeout}. And we also failed to kill the timeout process because '{e.Message}'!");
+                terminationException = e;
             }
-            throw new TimeoutException($@"Execute command: {bin} {arg} at {path} was time out! Timeout is {timeout}.");
+
+            var message = $@"Execute command: {bin} {arg} at {path} timed out! Timeout is {timeout}.";
+            if (terminationException != null)
+            {
+                message += $" Failed to terminate the process tree cleanly: '{terminationException.Message}'.";
+            }
+
+            throw new TimeoutException(message, terminationException);
         }
 
         var output = Encoding.UTF8.GetString(outputMemoryStream.ToArray());

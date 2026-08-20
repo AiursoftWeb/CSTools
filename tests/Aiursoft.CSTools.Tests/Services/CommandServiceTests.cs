@@ -43,6 +43,50 @@ public class CommandServiceTests
     }
 
     [TestMethod]
+    public async Task TestProgramTimeoutKillsEntireProcessTree()
+    {
+        if (OperatingSystem.IsWindows())
+        {
+            Assert.Inconclusive("This process-tree regression test uses a POSIX shell script.");
+            return;
+        }
+
+        var testDirectory = Path.Combine(Path.GetTempPath(), "CommandServiceTimeout_" + Guid.NewGuid());
+        Directory.CreateDirectory(testDirectory);
+        var scriptPath = Path.Combine(testDirectory, "spawn-child.sh");
+        var childMarkerPath = Path.Combine(testDirectory, "child-survived");
+
+        try
+        {
+            await File.WriteAllTextAsync(
+                scriptPath,
+                "#!/bin/sh\n(sleep 1; touch \"$1\") &\nwait\n");
+            File.SetUnixFileMode(
+                scriptPath,
+                UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+
+            var service = new CommandService();
+            await Assert.ThrowsExactlyAsync<TimeoutException>(async () =>
+            {
+                await service.RunCommandAsync(
+                    scriptPath,
+                    childMarkerPath,
+                    testDirectory,
+                    TimeSpan.FromMilliseconds(100));
+            });
+
+            await Task.Delay(TimeSpan.FromSeconds(2));
+            Assert.IsFalse(
+                File.Exists(childMarkerPath),
+                "A child process survived after the timed-out command's process tree was terminated.");
+        }
+        finally
+        {
+            FolderDeleter.DeleteByForce(testDirectory);
+        }
+    }
+
+    [TestMethod]
     public async Task TestProgramError()
     {
         var service = new CommandService();
