@@ -1,6 +1,6 @@
 # CSTools
 
-[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://gitlab.aiursoft.com/aiursoft/CSTools/-/blob/master/LICENSE)
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/AiursoftWeb/cstools/blob/master/LICENSE)
 [![Pipeline stat](https://gitlab.aiursoft.com/aiursoft/CSTools/badges/master/pipeline.svg)](https://gitlab.aiursoft.com/aiursoft/CSTools/-/pipelines)
 [![Test Coverage](https://gitlab.aiursoft.com/aiursoft/CSTools/badges/master/coverage.svg)](https://gitlab.aiursoft.com/aiursoft/CSTools/-/pipelines)
 [![NuGet version (Aiursoft.CSTools)](https://img.shields.io/nuget/v/Aiursoft.CSTools.svg)](https://www.nuget.org/packages/Aiursoft.CSTools/)
