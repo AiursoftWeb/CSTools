@@ -3,6 +3,7 @@
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/AiursoftWeb/cstools/blob/master/LICENSE)
 [![Pipeline stat](https://gitlab.aiursoft.com/aiursoft/CSTools/badges/master/pipeline.svg)](https://gitlab.aiursoft.com/aiursoft/CSTools/-/pipelines)
 [![Test Coverage](https://gitlab.aiursoft.com/aiursoft/CSTools/badges/master/coverage.svg)](https://gitlab.aiursoft.com/aiursoft/CSTools/-/pipelines)
+[![S360 compliance](https://s360.aiursoft.com/badge.svg?project=aiursoft%2Fcstools)](https://s360.aiursoft.com/SupplyChain?tab=projects&project=aiursoft%2Fcstools&scope=baseline&ecosystem=all)
 [![NuGet version (Aiursoft.CSTools)](https://img.shields.io/nuget/v/Aiursoft.CSTools.svg)](https://www.nuget.org/packages/Aiursoft.CSTools/)
 [![Man hours](https://manhours.aiursoft.com/r/github.com/aiursoftweb/cstools.svg)](https://manhours.aiursoft.com/r/github.com/aiursoftweb/cstools.html)
 
