@@ -28,7 +28,7 @@ before_script:
       export SOLUTION_FILE="$1"
     # CI uses the company NuGet source approved by S360. Keep nuget.org in the
     # checked-in config for external contributors, but do not bypass CI policy.
-    - &internal_nuget_config |
+    - |
       cat > nuget.config << 'NUGETEOF'
       <?xml version="1.0" encoding="utf-8"?>
       <configuration>
@@ -38,24 +38,18 @@ before_script:
           </packageSources>
       </configuration>
       NUGETEOF
-    # Audit/publish clients stay job-local. Reuse the fixed Runner tool baseline.
-    - export PATH="$CI_BUILDS_DIR/.ci-tools/$CI_JOB_ID:$HOME/.dotnet/tools:$PATH"
-    - |
-      dotnet tool list --global | awk '
-        $1 == "jetbrains.resharper.globaltools" { jb = ($2 == "2026.2.4.1"); print }
-        $1 == "dotnet-reportgenerator-globaltool" { report = ($2 == "5.5.12"); print }
-        END {
-          if (!jb || !report) {
-            print "Expected Runner tools: ReSharper 2026.2.4.1 and ReportGenerator 5.5.12." > "/dev/stderr"
-            exit 1
-          }
-        }'
+    # External tools come from the Runner. Never install or update them here.
+    - export PATH="$HOME/.dotnet/tools:$PATH"
+    - command -v dotnet          || { echo "Runner is missing dotnet." >&2; exit 1; }
+    - command -v jb              || { echo "Runner is missing jb." >&2; exit 1; }
+    - command -v reportgenerator || { echo "Runner is missing reportgenerator." >&2; exit 1; }
+    # Refresh internal clients globally from the internal source only.
+    - dotnet tool update --global Aiursoft.S360.Client --source https://nupkg.aiursoft.com/v3/index.json
+    - dotnet tool update --global Aiursoft.Apkg.Client --source https://nupkg.aiursoft.com/v3/index.json
+    - s360 --version
+    - apkg --version
     - 'echo "Hostname: $(hostname)"'
     - "dotnet --info"
-
-# Keep tool archives outside the repository/artifact scan and remove this job only.
-after_script:
-    - rm -rf "$CI_BUILDS_DIR/.ci-tools/$CI_JOB_ID"
 
 variables:
     GIT_CLONE_PATH: "$CI_BUILDS_DIR/$CI_PROJECT_NAME/$CI_PIPELINE_ID/$CI_JOB_ID"
@@ -63,12 +57,10 @@ variables:
     DOTNET_CLI_TELEMETRY_OPTOUT: "1"
     S360_PURPOSE: review
     S360_CHECK_KEY: ""
-    CUSTOM_NUGET_ARGS: "--add-source https://nupkg.aiursoft.com/v3/index.json --configfile ./nuget.config"
 
 s360:
     stage: s360
     script:
-        - dotnet tool update Aiursoft.S360.Client --tool-path "$CI_BUILDS_DIR/.ci-tools/$CI_JOB_ID" $CUSTOM_NUGET_ARGS
         # Preserve independently verified origin evidence; compilation uses Nupkg.
         - dotnet restore "$SOLUTION_FILE" --source https://nuget.aiursoft.com/v3/index.json --use-lock-file --disable-parallel --no-cache --configfile nuget.config --packages "$CI_PROJECT_DIR/obj/s360-packages"
         - s360 check --path "$SOLUTION_FILE" --ecosystem nuget --purpose "$S360_PURPOSE"
@@ -83,11 +75,7 @@ s360:
 
 s360_npm:
     stage: s360
-    before_script:
-        - *internal_nuget_config
     script:
-        - export PATH="$CI_BUILDS_DIR/.ci-tools/$CI_JOB_ID:$PATH:$HOME/.dotnet/tools"
-        - dotnet tool update Aiursoft.S360.Client --tool-path "$CI_BUILDS_DIR/.ci-tools/$CI_JOB_ID" $CUSTOM_NUGET_ARGS
         - s360 check --path . --ecosystem npm --npm-lockfile-only --purpose "$S360_PURPOSE"
     rules:
         - exists:
@@ -177,7 +165,6 @@ validate_apkg:
     needs:
         - build
     script:
-        - "dotnet tool update Aiursoft.Apkg.Client --tool-path \"$CI_BUILDS_DIR/.ci-tools/$CI_JOB_ID\" $CUSTOM_NUGET_ARGS -v d"
         - |
             aosproj_files=$(find . -type f -name '*.aosproj')
             if [ -z "$aosproj_files" ]; then
