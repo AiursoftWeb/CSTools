@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.InteropServices;
 using Aiursoft.CSTools.Services;
 using Aiursoft.CSTools.Tools;
@@ -92,7 +91,7 @@ public class CommandServiceTests
     {
         var service = new CommandService();
         var (code, output, error) = await service.RunCommandAsync("ping", "-n 2 notexist", Environment.CurrentDirectory);
-        Assert.IsTrue(output.ToLower(CultureInfo.CurrentCulture).Contains("ping") || error.ToLower(CultureInfo.CurrentCulture).Contains("ping"));
+        Assert.IsTrue(output.ToLower().Contains("ping") || error.ToLower().Contains("ping"));
         Assert.IsGreaterThan(0, code);
     }
 

@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -98,7 +97,7 @@ public static class StringExtends
     public static bool IsInFollowingExtension(this string filename, params string[] extensions)
     {
         var ext = Path.GetExtension(filename);
-        return extensions.Any(extension => ext.Trim('.').ToLower(CultureInfo.CurrentCulture) == extension);
+        return extensions.Any(extension => ext.Trim('.').ToLower() == extension);
     }
 
     public static bool IsStaticImage(this string filename)
@@ -262,7 +261,7 @@ public static class StringExtends
                 return target;
             }
 
-            return char.ToLower(target[0], CultureInfo.CurrentCulture) + (target.Length > 1 ? target.Substring(1) : string.Empty);
+            return char.ToLower(target[0]) + (target.Length > 1 ? target.Substring(1) : string.Empty);
         }, RegexOptions.IgnoreCase);
     }
 }
