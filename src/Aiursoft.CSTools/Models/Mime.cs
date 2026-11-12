@@ -1,3 +1,4 @@
+using System.Globalization;
 namespace Aiursoft.CSTools.Models;
 
 public static class Mime
@@ -239,7 +240,7 @@ public static class Mime
 
     public static string GetContentType(string extenstion)
     {
-        var lower = extenstion.ToLower().TrimStart('.');
+        var lower = extenstion.ToLower(CultureInfo.CurrentCulture).TrimStart('.');
         if (ExtensionMap.TryGetValue(lower, out var mapping))
         {
             return mapping.ContentType;
@@ -249,7 +250,7 @@ public static class Mime
 
     public static string GetIcon(string fileName)
     {
-        var extension = Path.GetExtension(fileName).TrimStart('.').ToLower();
+        var extension = Path.GetExtension(fileName).TrimStart('.').ToLower(CultureInfo.CurrentCulture);
         if (ExtensionMap.TryGetValue(extension, out var mapping))
         {
             return mapping.Icon;
