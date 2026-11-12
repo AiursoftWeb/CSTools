@@ -97,7 +97,7 @@ public static class StringExtends
     public static bool IsInFollowingExtension(this string filename, params string[] extensions)
     {
         var ext = Path.GetExtension(filename);
-        return extensions.Any(extension => ext.Trim('.').ToLower() == extension);
+        return extensions.Any(extension => ext.Trim('.').ToLowerInvariant() == extension);
     }
 
     public static bool IsStaticImage(this string filename)
@@ -261,7 +261,7 @@ public static class StringExtends
                 return target;
             }
 
-            return char.ToLower(target[0]) + (target.Length > 1 ? target.Substring(1) : string.Empty);
+            return char.ToLowerInvariant(target[0]) + (target.Length > 1 ? target.Substring(1) : string.Empty);
         }, RegexOptions.IgnoreCase);
     }
 }
