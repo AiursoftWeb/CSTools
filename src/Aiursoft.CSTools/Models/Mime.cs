@@ -239,7 +239,7 @@ public static class Mime
 
     public static string GetContentType(string extenstion)
     {
-        var lower = extenstion.ToLower().TrimStart('.');
+        var lower = extenstion.ToLowerInvariant().TrimStart('.');
         if (ExtensionMap.TryGetValue(lower, out var mapping))
         {
             return mapping.ContentType;
@@ -249,7 +249,7 @@ public static class Mime
 
     public static string GetIcon(string fileName)
     {
-        var extension = Path.GetExtension(fileName).TrimStart('.').ToLower();
+        var extension = Path.GetExtension(fileName).TrimStart('.').ToLowerInvariant();
         if (ExtensionMap.TryGetValue(extension, out var mapping))
         {
             return mapping.Icon;
